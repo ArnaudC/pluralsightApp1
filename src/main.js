@@ -15,8 +15,6 @@ app.on('ready', _ => {
     })
 
     mainWindow.loadURL(`file://${__dirname}/countdown.html`);
-    countdown();
-
     mainWindow.on('closed', _ => {
         console.log('exit')
         mainWindow = null
@@ -25,6 +23,10 @@ app.on('ready', _ => {
 
 
 ipc.on('countdown-start', _ => {
-    countdown()
+    countdown( // come out of countdown at time interval and set it back to the main module
+        count => {
+            mainWindow.webContents.send('countdown', count)
+        }
+    )
     console.log('in')
 })
