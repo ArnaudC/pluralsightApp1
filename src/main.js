@@ -1,30 +1,30 @@
-console.log('test')
+const electron = require('electron')
+const countdown = require('./countdown')
 
-// const electron = require('electron')
-// const countdown = require('./countdown')
+const app = electron.app
+const BrowserWindow = electron.BrowserWindow
+const ipc = electron.ipcMain
 
-// const app = electron.app
-// const BrowserWindow = electron.BrowserWindow
-// const ipc = electron.ipcMain
+let mainWindow
 
-// let mainWindow
+app.on('ready', _ => {
+    console.log('ready')
+    mainWindow = new BrowserWindow({
+        height: 400,
+        width: 400
+    })
 
-// app.on('ready', _ => {
-//     mainWindow = new BrowserWindow({
-//         height: 400,
-//         width: 400
-//     })
+    mainWindow.loadURL(`file://${__dirname}/countdown.html`);
+    countdown();
 
-//     mainWindow.loadURL(`file://${__dirname}/countdown.html`);
-
-//     mainWindow.on('closed', _ => {
-//         console.log('exit')
-//         mainWindow = null
-//     });
-// })
+    mainWindow.on('closed', _ => {
+        console.log('exit')
+        mainWindow = null
+    });
+})
 
 
-// ipc.on('countdown-start', _ => {
-//     countdown()
-//     console.log('in')
-// })
+ipc.on('countdown-start', _ => {
+    countdown()
+    console.log('in')
+})
