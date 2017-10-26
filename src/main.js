@@ -13,9 +13,9 @@ app.on('ready', _ => {
             height: 400,
             width: 400
         })
-    
+
         win.loadURL(`file://${__dirname}/countdown.html`);
-    
+
         win.on('closed', _ => {
             console.log('exit')
             win = null
